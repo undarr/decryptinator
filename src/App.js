@@ -2470,10 +2470,10 @@ function App() {
     if (n===1 || n===11) {
       return(<>
       <div id="starttitle">D☣cryptinator</div>
-      <div id="startdes">An original <a href="https://fly.undarr.com/" target="_blank">Undarfly</a> react.js game by <a href="https://fly.undarr.com/profile/" target="_blank">Ulfred Chan</a>, 2024</div>
+      <div id="startdes">An original <a href="https://fly.undarr.com/" target="_blank" rel="noreferrer">Undarfly</a> react.js game by <a href="https://fly.undarr.com/profile/" target="_blank" rel="noreferrer">Ulfred Chan</a>, 2024</div>
       {n===1 ? 
       <><button className="startbutton" onClick={() => {sstartingframe(11);}}>Start Game</button>
-      <a href="https://fly.undarr.com/decryptinator/" target="_blank"><button className="startbutton">How to Play</button></a>
+      <a href="https://fly.undarr.com/decryptinator/" target="_blank" rel="noreferrer"><button className="startbutton">How to Play</button></a>
       <button className="startbutton" onClick={() => {sstartingframe(21);}}>View High Scores</button></>
       :<>{ongoinggame ? <button className="startbutton" onClick={() => {sstartingframe(1); sframe(getlocalstorage('frame',-1));}}><div style={{"fontSize":"5vh"}}>Continue Game</div>
         <div style={{"fontSize":"2vh"}}>{disgamemode()}, <span className="cash">${cash}</span>, <span className="time">{distime(time)}</span>, <span className="diff">💀{"<"}{diff}{"/60>"}</span>, Fixed {"<"}{fixcount}{">"}</div></button>
@@ -2485,7 +2485,7 @@ function App() {
       }
       <br></br>
       <br></br>
-      <div id="startdes">Inspired by <a href="https://store.steampowered.com/app/1831530/PC_Creator__PC_Building_Simulator/" target="_blank">PC creator</a>, dedicated to <a href="https://www.instagram.com/meliora_csa/" target="_blank">Meliora</a>.</div>
+      <div id="startdes">Inspired by <a href="https://store.steampowered.com/app/1831530/PC_Creator__PC_Building_Simulator/" target="_blank" rel="noreferrer">PC creator</a>, dedicated to <a href="https://www.instagram.com/meliora_csa/" target="_blank" rel="noreferrer">Meliora</a>.</div>
       </>)
     }
     if (n===21) {
