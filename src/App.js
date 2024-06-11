@@ -1826,10 +1826,10 @@ function App() {
       const temp3={"noteh":[...vgcodedb.current["noteh"]], "notes":[...vgcodedb.current["notes"]], "notep":[...vgcodedb.current["notep"]], "noteu":[...vgcodedb.current["noteu"]]};
       const sellblock=vstate.current[pos];
       if (sellblock.autotypingcodetype[0]!=="") {
-        temp3[sellblock.autotypingcodetype[0]]=temp[sellblock.autotypingcodetype[0]].map((j) => j.code===sellblock.autotypingcode[0] ? new GNote(j.code, j.qgen, false) : j);
+        temp3[sellblock.autotypingcodetype[0]]=temp3[sellblock.autotypingcodetype[0]].map((j) => j.code===sellblock.autotypingcode[0] ? new GNote(j.code, j.qgen, false) : j);
       }
       if (sellblock.autotypingcodetype[1]!=="") {
-        temp3[sellblock.autotypingcodetype[1]]=temp[sellblock.autotypingcodetype[1]].map((j) => j.code===sellblock.autotypingcode[1] ? new GNote(j.code, j.qgen, false) : j);
+        temp3[sellblock.autotypingcodetype[1]]=temp3[sellblock.autotypingcodetype[1]].map((j) => j.code===sellblock.autotypingcode[1] ? new GNote(j.code, j.qgen, false) : j);
       }
       sgcodedb(temp3);
       const temp = [...vstate.current];
