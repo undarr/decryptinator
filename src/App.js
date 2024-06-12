@@ -2579,8 +2579,9 @@ function App() {
     <link rel="stylesheet"href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans"></link>
     <link rel="stylesheet"href="https://fonts.googleapis.com/css2?family=Comic+Neue"></link>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide"></link>
+    <title>Decryptinator (v0.2)</title>
     <div className="header">
-      <h1 className="header-left">Decryptinator (v0.1)</h1>
+      <h1 className="header-left">Decryptinator (v0.2)</h1>
       <div className="header-right">
         <h1>an Original Game</h1>
       </div>
