@@ -1276,10 +1276,10 @@ function App() {
       temp.push(addtime);
       temp.sort((a,b) => a-b);
       ssellspawn(temp);
-      if (gameended===false) {
-        if (gamemode===3 && vfixcount.current>=30) {endgame();}
-        if (gamemode===4 && vfixcount.current>=60) {endgame();}
-        if (gamemode===5 && vfixcount.current>=100) {endgame();}
+      if (vgamemode.current>=3 && vgamemode.current<=5 && gameended===false) {
+        if (vgamemode.current===3 && vfixcount.current>=30) {endgame();}
+        if (vgamemode.current===4 && vfixcount.current>=60) {endgame();}
+        if (vgamemode.current===5 && vfixcount.current>=100) {endgame();}
       }
     }
 
@@ -1844,6 +1844,11 @@ function App() {
       temp2.push(addtime);
       temp2.sort((a,b) => a-b);
       ssellspawn(temp2);
+      if (vgamemode.current>=6 && vgamemode.current<=9 && gameended==false) {
+        sstarstreak(0);
+        sstarcount(vstarcount.current-1);
+        if (vstarcount.current-1===0) {endgame();}
+      }
     }
     else {
       if (vcash.current>=cost) {
@@ -2127,6 +2132,7 @@ function App() {
   const [startingframe, sstartingframe] = useState(1);
 
   const [gamemode, sgamemode] = useState(getlocalstorage('gameset',[0,0,true,true])[0]);
+  const vgamemode = useRef(getlocalstorage('gameset',[0,0,true,true])[0]);
   const [gamediff, sgamediff] = useState(getlocalstorage('gameset',[0,0,true,true])[1]);
   const [defaultgame, sdefaultgame] = useState(getlocalstorage('defaultgame',true));
   const [enableotc, senableotc] = useState(getlocalstorage('gameset',[0,0,true,true])[2]);
@@ -2146,6 +2152,9 @@ function App() {
   const [ongoinggame, songoinggame] = useState(getlocalstorage('ongoinggame',false));
   const [gameended, sgameended] = useState(getlocalstorage('gameended',false));
   const [endscreen, sendscreen] = useState(getlocalstorage('endscreen',false));
+  const [starcount, sstarcount] = useState(getlocalstorage('starcount',-1));
+  const vstarcount = useRef(getlocalstorage('starcount',-1));
+  const [starstreak, sstarstreak] = useState(getlocalstorage('starstreak',-1));
 
   const [state, sstate]=useState(localStorage.getItem('state')!==null ? JSON.parse(localStorage.getItem('state')).map(i => gencell(i.loc, i.type, i, true)):
     [gencell(0), gencell(1), gencell(2), gencell(3), gencell(4), gencell(5), gencell(6),gencell(7), gencell(8), gencell(9), gencell(10), gencell(11), gencell(12), gencell(13,"kl",{"def":true}),
@@ -2219,6 +2228,10 @@ function App() {
   },[startset])
 
   useEffect(() => {
+    vgamemode.current=gamemode
+  },[gamemode])
+
+  useEffect(() => {
     vnxtspawn.current=nxtspawn;
     localStorage.setItem('nxtspawn',JSON.stringify(nxtspawn));
   },[nxtspawn])
@@ -2277,6 +2290,15 @@ function App() {
   useEffect(() => {
     localStorage.setItem('endscreen',JSON.stringify(endscreen));
   },[endscreen])
+
+  useEffect(() => {
+    localStorage.setItem('starcount',JSON.stringify(starcount));
+    vstarcount.current=starcount;
+  },[starcount])
+
+  useEffect(() => {
+    localStorage.setItem('starstreak',JSON.stringify(starstreak));
+  },[starstreak])
 
   useEffect(() => {
     window.addEventListener('keydown', handlekeypress);
@@ -2350,10 +2372,10 @@ function App() {
           localStorage.setItem('waitingspawn',JSON.stringify(false));
         }
       }
-      if (gameended===false) {
-        if (gamemode===0 && time>=20*60) {endgame();}
-        if (gamemode===1 && time>=40*60) {endgame();}
-        if (gamemode===2 && time>=60*60) {endgame();}
+      if (vgamemode.current>=0 && vgamemode.current<=2 && gameended===false) {
+        if (vgamemode.current===0 && time>=20*60) {endgame();}
+        if (vgamemode.current===1 && time>=40*60) {endgame();}
+        if (vgamemode.current===2 && time>=60*60) {endgame();}
       }
       console.log('time: ',time,', nspawn: ',nxtspawn, 'sellspawn', sellspawn);
     }
@@ -2387,7 +2409,10 @@ function App() {
     vdiff.current=[1,6,11,16][startset[1]];
     senableotc(startset[2]);
     senablecurse(startset[3]);
-    localStorage.setItem('gameset',JSON.stringify([...startset]))
+    localStorage.setItem('gameset',JSON.stringify([...startset]));
+
+    if (startset[0]===6 || startset[0]===8) {sstarcount(3); vstarcount.current=3;}
+    if (startset[0]===7 || startset[0]===9) {sstarcount(5); vstarcount.current=5;}
 
     stime(0);
     sstate([gencell(0), gencell(1), gencell(2), gencell(3), gencell(4), gencell(5), gencell(6),gencell(7), gencell(8), gencell(9), gencell(10), gencell(11), gencell(12), gencell(13,"kl",{"def":true}),
@@ -2402,7 +2427,7 @@ function App() {
     gencell(42), gencell(43),gencell(44), gencell(45), gencell(46), gencell(47), gencell(48),gencell(49), gencell(50), gencell(51), gencell(52), gencell(53), gencell(54), gencell(55,"ks",{"def":true}),
     gencell(56), gencell(57),gencell(58), gencell(59), gencell(60), gencell(61), gencell(62),gencell(63), gencell(64), gencell(65), gencell(66), gencell(67,"sw",{"def":true}), gencell(68), gencell(69,"tp",{"def":true})];
 
-    if (startset[0]===9) {scash(60000);
+    if (startset[0]===11) {scash(60000);
       sdiff(40);
       vdiff.current=40;
       sstate([gencell(0), gencell(1), gencell(2), gencell(3), gencell(4), gencell(5), gencell(6),gencell(7), gencell(8), gencell(9), gencell(10), gencell(11), gencell(12), gencell(13,"kl",{"def":true}),
@@ -2422,11 +2447,12 @@ function App() {
     spawndev(2);
     snxtspawn(rdint(130,169));
     snxtincdiff(rdint(50,69));
+    ssellspawn([]);
     console.log(vstate.current);
 
-    songoinggame(true);
+    songoinggame(true); localStorage.setItem('ongoinggame',JSON.stringify(true));
     sgameended(false);
-    localStorage.setItem('ongoinggame',JSON.stringify(true));
+    sendscreen(false);
     sframe(-1);
     rfs();
     stimeon(true);
@@ -2436,18 +2462,21 @@ function App() {
   function endgame() {
     if (gameended===false) {
       stimeon(false);
-      sgameended(true);
       sendscreen(true);
     } 
   }
-
+  //★★★☆☆
   function gameendstat() {
     return(<>You fixed <span style={{"color":"#ff0"}}>{fixcount} </span> device{fixcount===1 ? "": "s"} in <span  style={{"color":"#f0f"}}> {distime(vtime.current)} </span> with <span style={{"color":"#0f0"}}> ${vcash.current} </span> left!</>)
   }
 
   function disgamemode() {
     return(["Best in 20 minutes","Best in 40 minutes","Best in 60 minutes","Fastest to 30 fixes","Fastest to 60 fixes","Fastest to 100 fixes",
-      "Starkeeper","Landmines","Rentchaser","Sandbox"][gamemode]+" <"+{true:"Def", false:"Cus"}[defaultgame]+["E","N","H","I"][gamediff]+">")
+      ["3☆ St☆r-keep☆r","3★ St☆r-keep☆r","3★ St★r-keep☆r","3★ St★r-keep★r"][vstarcount.current],
+      ["5☆ St☆r-k☆☆p☆r","5★ St☆r-k☆☆p☆r","5★ St★r-k☆☆p☆r","5★ St★r-k★☆p☆r","5★ St★r-k★★p☆r","5★ St★r-k★★p★r"][vstarcount.current],
+      ["3☆ Regen St☆r-keep☆r","3★ Regen St☆r-keep☆r","3★ Regen St★r-keep☆r","3★ Regen St★r-keep★r"][vstarcount.current],
+      ["5☆ Regen St☆r-k☆☆p☆r","5★ Regen St☆r-k☆☆p☆r","5★ Regen St★r-k☆☆p☆r","5★ Regen St★r-k★☆p☆r","5★ Regen St★r-k★★p☆r","5★ Regen St★r-k★★p★r"][vstarcount.current],
+      "Rental","Sandbox"][vgamemode.current]+" <"+(defaultgame ? "" : "*")+["E","N","H","I"][gamediff]+(gameended ? "∞" : "")+">")
   }
 
   function startingmenu(n) {
@@ -2462,7 +2491,7 @@ function App() {
       return(sd)
     }
     function sstartsetx(x,n) {
-      if (n===6 || n===7 || n===8) {return;}
+      if (n===8 || n===9 || n===10) {return;}
       const temp=[...startset];
       temp[x]=n;
       sstartset(temp);
@@ -2506,10 +2535,12 @@ function App() {
       <button className="startbutton2" style={getstyle("15%","8vh",0,3)} onClick={() => {sstartsetx(0,3);}}>30 fixes</button>
       <button className="startbutton2" style={getstyle("15%","8vh",0,4)} onClick={() => {sstartsetx(0,4);}}>60 fixes</button>
       <button className="startbutton2" style={getstyle("15%","8vh",0,5)} onClick={() => {sstartsetx(0,5);}}>100 fixes</button>
-      <button className="startbutton2 disabled" style={getstyle("20%","8vh",0,6)} onClick={() => {sstartsetx(0,6);}}>Starkeeper</button>
-      <button className="startbutton2 disabled" style={getstyle("20%","8vh",0,7)} onClick={() => {sstartsetx(0,7);}}>Landmines</button>
-      <button className="startbutton2 disabled" style={getstyle("20%","8vh",0,8)} onClick={() => {sstartsetx(0,8);}}>Rentchaser</button>
-      <button className="startbutton2" style={getstyle("20%","8vh",0,9)} onClick={() => {sstartsetx(0,9);}}>Sandbox</button>
+      <button className="startbutton2" style={getstyle("15%","8vh",0,6)} onClick={() => {sstartsetx(0,6);}}>3 Stars</button>
+      <button className="startbutton2" style={getstyle("15%","8vh",0,7)} onClick={() => {sstartsetx(0,7);}}>5 Stars</button>
+      <button className="startbutton2 disabled" style={getstyle("15%","8vh",0,8)} onClick={() => {sstartsetx(0,8);}}>3 StarsR</button>
+      <button className="startbutton2 disabled" style={getstyle("15%","8vh",0,9)} onClick={() => {sstartsetx(0,9);}}>5 StarsR</button>
+      <button className="startbutton2 disabled" style={getstyle("15%","8vh",0,10)} onClick={() => {sstartsetx(0,10);}}>Rental</button>
+      <button className="startbutton2" style={getstyle("15%","8vh",0,11)} onClick={() => {sstartsetx(0,11);}}>Sandbox</button>
       </div>
       <div>
       <div id="startdes">Game difficulty: (Click to select)</div>
@@ -2541,11 +2572,14 @@ function App() {
     }
   }
 
-  //<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide"></link>
-
   return (
     <div className="App">
-      <div className="header">
+    <link href="https://fonts.googleapis.com/css2?family=Shantell+Sans" rel="stylesheet"></link>
+    <link rel="stylesheet"href="https://fonts.googleapis.com/css2?family=Playpen+Sans"></link>
+    <link rel="stylesheet"href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans"></link>
+    <link rel="stylesheet"href="https://fonts.googleapis.com/css2?family=Comic+Neue"></link>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide"></link>
+    <div className="header">
       <h1 className="header-left">Decryptinator (v0.1)</h1>
       <div className="header-right">
         <h1>an Original Game</h1>
@@ -2560,7 +2594,7 @@ function App() {
       <div className={frame!==-2 && !timeon ? "pauseoverlayin" : "hide"}>
         <div id="pausetitle">{endscreen ? "G☣me ended!" : "D☣cryptinator"}</div>
         <div id="pausedes">{endscreen ? gameendstat() : "Game paused"}</div>
-        <button className="startbutton" onClick={() => {stimeon(true); sendscreen(false);}}>{endscreen ? "Continue Endless" : "Continue Game"}</button>
+        <button className="startbutton" onClick={() => {stimeon(true); if (endscreen) {sendscreen(false); sgameended(true);}}}>{endscreen ? "Continue Endless" : "Continue Game"}</button>
         <button className="startbutton" onClick={() => {sframe(-2);}}>Back to main menu</button>
       </div>
     </div>

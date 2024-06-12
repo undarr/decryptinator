@@ -85,7 +85,7 @@ table.setup {
 .topbar {
   width: 12vh;
   height: 4vh;
-  font-family: cursive, sans-serif;
+  font-family: "Playpen Sans", sans-serif;
   font-size: 2.5vh;
   font-style: italic;
   text-align: center;
@@ -315,7 +315,7 @@ button:focus {
   width: 24vh;
   height: 76vh;
   border-style: solid;
-  font-family: cursive, sans-serif;
+  font-family: "Shantell Sans", sans-serif;
   font-size: 2.5vh;
   font-style: italic;
   text-align: center;
@@ -615,13 +615,13 @@ button:focus {
 
 #starttitle {
   font-size: 15vh;
-  font-family: cursive, sans-serif;
+  font-family: "Audiowide", sans-serif;
   font-style: italic;
 }
 
 #startdes {
   font-size: 5vh;
-  font-family: cursive, sans-serif;
+  font-family: "Shantell Sans", sans-serif;
   font-style: italic;
 }
 
@@ -634,7 +634,7 @@ button:focus {
   font-size: 6vh;
   width : 50%;
   height: 12vh;
-  font-family: cursive, sans-serif;
+  font-family: "Playpen Sans", sans-serif;
   margin: 2vh 0.4vh 0vh 0.4vh;
   padding: 0.2vh 0;
   border-style: solid;
@@ -646,7 +646,7 @@ button:focus {
 .startbutton2 {
   text-align: center;
   font-size: 4vh;
-  font-family: cursive, sans-serif;
+  font-family: "Playpen Sans", sans-serif;
   width : 15%;
   height: 8vh;
   margin: 1vh 0.4vh 0vh 0.4vh;
@@ -660,7 +660,7 @@ button:focus {
 .startbutton3 {
   text-align: center;
   font-size: 4vh;
-  font-family: cursive, sans-serif;
+  font-family: "Playpen Sans", sans-serif;
   width : 15%;
   height: 8vh;
   margin: 1vh 0.4vh 0vh 0.4vh;
@@ -688,14 +688,14 @@ button:focus {
 
 #pausetitle {
   font-size: 15vh;
-  font-family: cursive, sans-serif;
+  font-family: "Audiowide", sans-serif;
   font-style: italic;
   color: #ffffff;
 }
 
 #pausedes {
   font-size: 5vh;
-  font-family: cursive, sans-serif;
+  font-family: "Shantell Sans",sans-serif;
   font-style: italic;
   color: #ffffff;
 }
