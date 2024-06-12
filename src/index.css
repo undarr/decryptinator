@@ -108,6 +108,7 @@ button {
   background-repeat: no-repeat;
   border: none;
   border-radius: 1vh;
+  color: #000;
 }
 
 button:hover {

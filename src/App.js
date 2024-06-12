@@ -2301,6 +2301,7 @@ function App() {
   },[starstreak])
 
   useEffect(() => {
+    document.title = 'Decryptinator (v0.2) - Strategic typing game, Undarfly Universe';
     window.addEventListener('keydown', handlekeypress);
     return () => {
         window.removeEventListener('keydown', handlekeypress);
@@ -2579,7 +2580,6 @@ function App() {
     <link rel="stylesheet"href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans"></link>
     <link rel="stylesheet"href="https://fonts.googleapis.com/css2?family=Comic+Neue"></link>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide"></link>
-    <title>Decryptinator (v0.2)</title>
     <div className="header">
       <h1 className="header-left">Decryptinator (v0.2)</h1>
       <div className="header-right">
