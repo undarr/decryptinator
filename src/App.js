@@ -21,13 +21,16 @@ function App() {
       this.loc = d.loc;
       this.latency = d.latency || rdint(1,900);
       this.setlatency = d.setlatency !== undefined && d.setlatency<=2000 ? d.setlatency : Date.now();
+      this.latency2 = d.latency2 || rdint(1,900);
+      this.setlatency2 = d.setlatency2 !== undefined && d.setlatency<=2000 ? d.setlatency : Date.now();
     }
 
     itimerf() {}
+    itimerf2() {}
 
     getattridict() {
       return({"sel":this.sel, "type":this.type, "def":this.def, "celltype":this.celltype, "upgrading":this.upgrading,
-      "loc":this.loc, "latency":this.latency, "setlatency":this.setlatency})
+      "loc":this.loc, "latency":this.latency, "setlatency":this.setlatency, "latency2":this.latency, "setlatency2":this.setlatency})
     }
 
     cparity() {return 0}
@@ -1200,8 +1203,7 @@ function App() {
       this.autotypingcode = d.autotypingcode || ["",""]
       this.autotypingcodetype = d.autotypingcodetype || ["",""]
       this.returntime = d.returntime || -1;
-      this.returninterval = setInterval(() => {if (vtimeon.current && this.returntime>0) {this.returntime-=1; if (this.returntime===0) {this.setlatency=0; this.latency=1;}}}, 1000);
-      this.nameinterval = setInterval(() => {if (vtimeon.current) {this.virusshow = rdvir(this.normalshow,this.codecount(this.codes)-this.progress[1]-this.progress[0]);}}, 1000);
+      this.returntimeshow = this.returntime-vtime.current;
     }
 
     getattridict() {
@@ -1227,10 +1229,7 @@ function App() {
 
     itimerf() {
       super.itimerf();
-      if (this.returntime===0) {
-        this.returndevice();
-      }
-      else {
+      if (this.returntimeshow!==0) {
         for (let n=0; n<3; n++) {
           if (this.decryptingtime[n]>0) {
             this.decryptingtime[n]-=1;
@@ -1253,10 +1252,19 @@ function App() {
       }
     }
 
-    returndevice() {
-      clearInterval(this.returninterval);
-      if (this.progress[3]===0) {clearInterval(this.nameinterval); buy("aban",this.sellprice,this.loc);}
-      else {sell(this.reward[0],this.loc);}
+    itimerf2() {
+      super.itimerf2();
+      if (this.progress[3]===0) {
+        this.virusshow = rdvir(this.normalshow,this.codecount(this.codes)-this.progress[1]-this.progress[0]);
+      }
+      else {this.virusshow=this.normalshow;}
+      if (this.returntime!==-1 && this.returntime<=vtime.current) {
+        if (this.progress[3]===0) {clearInterval(this.nameinterval); buy("aban",this.sellprice,this.loc);}
+        else {sell(this.reward[0],this.loc);}
+      }
+      else {
+        this.returntimeshow=this.returntime-vtime.current;
+      }
     }
 
     codecount(codes) {return(codes.length===2 ? codes[0].length+codes[1].length : codes[0].length)}
@@ -1266,7 +1274,6 @@ function App() {
       sfixcount(vfixcount.current+1);
       if (vfixcount.current%2===1 && vdiff.current<60) {sdiff(vdiff.current+1);}
       if (vfixcount.current%4===0 && vfixcount.current>0) {spawndev();}
-      clearInterval(this.nameinterval);
       this.virusshow=this.normalshow;
       const temp = [...sellspawn]
       var addtime=vtime.current+rdint(6,9);
@@ -1284,11 +1291,11 @@ function App() {
     }
 
     dpdetails() {
-      if (this.progress[3]===0) {return (<>{this.normalshow} {"<"}Fix {this.returntime<=-1 ? <></> : <>in <span className="time">{distime(this.returntime)}</span> </>}for <span className="cash">${this.reward[0]}</span>{">"}</>);}
-      if (this.progress[3]===1) {return (<>{this.normalshow} {"<"}Already <span className="cash">${this.reward[0]}</span>, upgrade cleaners {this.returntime<=-1 ? <></> : <>in <span className="time">{distime(this.returntime)}</span> </>}for <span className="cash">+${this.reward[1]}</span>{">"}</>);}
-      if (this.progress[3]===2) {return (<>{this.normalshow} {"<"}Already <span className="cash">${this.reward[0]}</span>, upgrade firewall {this.returntime<=-1 ? <></> : <>in <span className="time">{distime(this.returntime)}</span> </>}for <span className="cash">+${this.reward[2]}</span>{">"}</>);}
-      if (this.progress[3]===3) {return (<>{this.normalshow} {"<"}Already <span className="cash">${this.reward[0]}</span>, upgrade antivirus {this.returntime<=-1 ? <></> : <>in <span className="time">{distime(this.returntime)}</span> </>}for <span className="cash">+${this.reward[3]}</span>{">"}</>);}
-      if (this.progress[3]===4) {return (<>{this.normalshow} {"<"}Fixed and fully upgraded, return device {this.returntime<=-1 ? <></> : <>in <span className="time">{distime(this.returntime)}</span> </>}and collect <span className="cash">${this.reward[0]}</span>{">"}</>);}
+      if (this.progress[3]===0) {return (<>{this.normalshow} {"<"}Fix {this.returntime<=-1 ? <></> : <>in <span className="time">{distime(this.returntimeshow)}</span> </>}for <span className="cash">${this.reward[0]}</span>{">"}</>);}
+      if (this.progress[3]===1) {return (<>{this.normalshow} {"<"}Already <span className="cash">${this.reward[0]}</span>, upgrade cleaners {this.returntime<=-1 ? <></> : <>in <span className="time">{distime(this.returntimeshow)}</span> </>}for <span className="cash">+${this.reward[1]}</span>{">"}</>);}
+      if (this.progress[3]===2) {return (<>{this.normalshow} {"<"}Already <span className="cash">${this.reward[0]}</span>, upgrade firewall {this.returntime<=-1 ? <></> : <>in <span className="time">{distime(this.returntimeshow)}</span> </>}for <span className="cash">+${this.reward[2]}</span>{">"}</>);}
+      if (this.progress[3]===3) {return (<>{this.normalshow} {"<"}Already <span className="cash">${this.reward[0]}</span>, upgrade antivirus {this.returntime<=-1 ? <></> : <>in <span className="time">{distime(this.returntimeshow)}</span> </>}for <span className="cash">+${this.reward[3]}</span>{">"}</>);}
+      if (this.progress[3]===4) {return (<>{this.normalshow} {"<"}Fixed and fully upgraded, return device {this.returntime<=-1 ? <></> : <>in <span className="time">{distime(this.returntimeshow)}</span> </>}and collect <span className="cash">${this.reward[0]}</span>{">"}</>);}
     }
 
     getshowtext() {
@@ -1757,7 +1764,7 @@ function App() {
     if (s[0]==="k") {return (reload ? new Driver(d) : new Driver({"sel":sel, "loc":loc, "def":def, "type":s, "buildcost":dbuildcost1, "sellprice":dsellprice}));}
     if (s==="tp") {return (reload ? new Touchpad(d) : new Touchpad({"sel":sel, "loc":loc, "def":def, "type":s, "buildcost":dbuildcost1, "sellprice":dsellprice}));}
     if (s==="dev") {return (reload ? new Device(d) : new Device({"sel":sel, "loc":loc, "type":s, "udlr":[true, true, true, true], "buildcost":dbuildcost1, "sellprice":dsellprice,
-    "codes":rdcodeblock(vdiff.current), "reward":[rdint(800,999),rdint(700,899),rdint(1300,1499),rdint(1900,2099)], "returntime":getreturntime()}));}
+    "codes":rdcodeblock(vdiff.current), "reward":[rdint(800,999),rdint(700,899),rdint(1300,1499),rdint(1900,2099)], "returntime":vtime.current+getreturntime()}));}
     if (s==="sw") {return (reload ? new Shopware(d) : new Shopware({"sel":sel, "def":def, "loc":loc, "type":s, "buildcost":dbuildcost2}));}
     if (s==="bf") {return (reload ? new Bruteforcer(d) : new Bruteforcer({"sel":sel, "loc":loc, "type":s, "buildcost":dbuildcost2}))}
     if (s==="dg") {return (reload ? new DevGuard(d) : new DevGuard({"sel":sel, "loc":loc, "type":s, "buildcost":dbuildcost2}))}
@@ -2300,11 +2307,26 @@ function App() {
     localStorage.setItem('starstreak',JSON.stringify(starstreak));
   },[starstreak])
 
+  // User has switched back to the tab
+  const onFocus = () => {
+    console.log("Tab is in focus");
+  };
+
+  // User has switched away from the tab (AKA tab is hidden)
+  const onBlur = () => {
+    console.log("Tab is blurred");
+    stimeon(false);
+  };
+
   useEffect(() => {
     document.title = 'Decryptinator (v0.2) - Strategic typing game, Undarfly Universe';
     window.addEventListener('keydown', handlekeypress);
+    window.addEventListener("focus", onFocus);
+    window.addEventListener("blur", onBlur);
     return () => {
         window.removeEventListener('keydown', handlekeypress);
+        window.removeEventListener("focus", onFocus);
+        window.removeEventListener("blur", onBlur);
     };
   }, []);
 
@@ -2317,7 +2339,12 @@ function App() {
           state[i].latency=1000-(Date.now()-state[i].setlatency);
           state[i].setlatency=0;
         }
+        if (Date.now()-state[i].setlatency2<1000) {
+          state[i].latency2=1000-(Date.now()-state[i].setlatency2);
+          state[i].setlatency2=0;
+        }
         setTimeout(() => {state[i].itimerf();}, state[i].latency);
+        setTimeout(() => {state[i].itimerf2();}, state[i].latency2);
       }
       if (time%60===0) {
         setTimeout(() => {
@@ -2415,7 +2442,7 @@ function App() {
     if (startset[0]===6 || startset[0]===8) {sstarcount(3); vstarcount.current=3;}
     if (startset[0]===7 || startset[0]===9) {sstarcount(5); vstarcount.current=5;}
 
-    stime(0);
+    stime(0); vtime.current=0;
     sstate([gencell(0), gencell(1), gencell(2), gencell(3), gencell(4), gencell(5), gencell(6),gencell(7), gencell(8), gencell(9), gencell(10), gencell(11), gencell(12), gencell(13,"kl",{"def":true}),
     gencell(14), gencell(15),gencell(16), gencell(17), gencell(18), gencell(19), gencell(20),gencell(21), gencell(22), gencell(23), gencell(24), gencell(25), gencell(26), gencell(27,"ku",{"def":true}),
     gencell(28), gencell(29),gencell(30), gencell(31), gencell(32), gencell(33), gencell(34),gencell(35), gencell(36), gencell(37), gencell(38), gencell(39), gencell(40), gencell(41,"kn",{"def":true}),
@@ -2445,10 +2472,12 @@ function App() {
     gencell(56), gencell(57),gencell(58), gencell(59), gencell(60), gencell(61), gencell(62),gencell(63), gencell(64), gencell(65), gencell(66), gencell(67,"sw",{"def":true}), gencell(68), gencell(69,"tp",{"def":true})]
     }
 
-    spawndev(2);
+    swaitingspawn(false);
     snxtspawn(rdint(130,169));
     snxtincdiff(rdint(50,69));
     ssellspawn([]);
+    spleakspawn([]);
+    spawndev(2);
     console.log(vstate.current);
 
     songoinggame(true); localStorage.setItem('ongoinggame',JSON.stringify(true));
@@ -2590,7 +2619,7 @@ function App() {
     <div className={frame===-2 ? "startframe frame" : "frame hide"}>
       {startingmenu(startingframe)}
     </div>
-    <button className={frame!==-2 ? "pausebutton" : "pausebutton hide"} onClick={() => {stimeon(!vtimeon.current);}} style={{"backgroundImage" : "url(./img/pausebtn.gif)"}}></button>
+    <button className={frame!==-2 ? "pausebutton" : "pausebutton hide"} onClick={() => {stimeon(false);}} style={{"backgroundImage" : "url(./img/pausebtn.gif)"}}></button>
     <div className="pauseoverlay" style={{"height":(frame!==-2 && !timeon ? "100%" : "0%"), "transition":(endscreen ? "0.5s" : "0s")}}>
       <div className={frame!==-2 && !timeon ? "pauseoverlayin" : "hide"}>
         <div id="pausetitle">{endscreen ? "G☣me ended!" : "D☣cryptinator"}</div>
