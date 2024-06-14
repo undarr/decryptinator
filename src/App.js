@@ -1259,12 +1259,16 @@ function App() {
       }
       else {this.virusshow=this.normalshow;}
       if (this.returntime!==-1 && this.returntime<=vtime.current) {
-        if (this.progress[3]===0) {clearInterval(this.nameinterval); buy("aban",this.sellprice,this.loc);}
-        else {sell(this.reward[0],this.loc);}
+        this.returndevice();
       }
       else {
         this.returntimeshow=this.returntime-vtime.current;
       }
+    }
+
+    returndevice() {
+      if (this.progress[3]===0) {clearInterval(this.nameinterval); buy("aban",this.sellprice,this.loc);}
+      else {sell(this.reward[0],this.loc);}
     }
 
     codecount(codes) {return(codes.length===2 ? codes[0].length+codes[1].length : codes[0].length)}
