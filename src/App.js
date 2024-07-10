@@ -2484,7 +2484,8 @@ function App() {
     spawndev(2);
     sgcodedb({"noteh":[], "notes":[], "notep":[], "noteu":[]});
     sggcodedb({"noteh":[], "notes":[], "notep":[], "noteu":[]});
-    sgcodeshow({"noteh":[], "notes":[], "notep":[], "noteu":[]});
+    scodedb({"noteh":[], "notes":[], "notep":[], "noteu":[]});
+    sgcodeshow("noteh");
 
     console.log(vstate.current);
 
