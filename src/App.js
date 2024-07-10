@@ -365,7 +365,7 @@ function App() {
         this.r = d.udlr[3] || false; //bool: Right connection?
       }
       this.celltype="b";
-      this.buildcost = d.buildcost || [rdint(400,599),rdint(400,599),rdint(400,599),rdint(400,599)];
+      this.buildcost = d.buildcost || [rdint(200,299),rdint(200,299),rdint(200,299),rdint(200,299)];
       this.sellprice = d.sellprice || rdint(400,599); //sell cost or forcewipe price
       this.upgradetime = d.upgradetime || [15,30,45,60];
       this.level=d.level || 1;
