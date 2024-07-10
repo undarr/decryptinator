@@ -761,7 +761,7 @@ function App() {
       var o='';
       for (let i = 0; i < 4; i++) {
         if ("udlr"[i] in conparts) {
-          if (conparts["udlr"[i]].type==='kl' || (conparts["udlr"[i]].type==="km" && conparts["udlr"[i]].drivers.includes("kl"))) {o+='qwertyuiopasdfghjklzxcvbnm';}
+          if (conparts["udlr"[i]].type==='kl' || (conparts["udlr"[i]].type==="km" && conparts["udlr"[i]].drivers.includes("kl"))) {o+='qwertyuiopasdfghjkzxcvbnm';}
           if (conparts["udlr"[i]].type==='ku' || (conparts["udlr"[i]].type==="km" && conparts["udlr"[i]].drivers.includes("ku"))) {o+='QWERTYUIOPASDFGHJKLZXCVBNM';}
           if (conparts["udlr"[i]].type==='kn' || (conparts["udlr"[i]].type==="km" && conparts["udlr"[i]].drivers.includes("kn"))) {o+='1234567890';}
           if (conparts["udlr"[i]].type==='ks' || (conparts["udlr"[i]].type==="km" && conparts["udlr"[i]].drivers.includes("ks"))) {o+='~!@#$%^&*()+`-={}[]:;<>?,./';}
@@ -943,7 +943,7 @@ function App() {
     constructor(d) {
       super(d);
       this.prices=d.prices || [rdint(900,1099),rdint(900,1099),rdint(900,1099),rdint(900,1099),rdint(900,1099),rdint(900,1099),rdint(900,1099),
-        rdint(900,1099),rdint(900,1099),rdint(900,1099),rdint(900,1099),rdint(600,799),0,0,0,rdint(150,249)];
+        rdint(900,1099),rdint(900,1099),rdint(900,1099),rdint(900,1099),rdint(750,949),0,0,0,rdint(150,249)];
       this.buying=d.buying !==undefined ? d.buying : -1;
       this.warnnote=d.warning || "";
       this.explainnote=<>{"{Hover over an item for more information.}"}</>;
@@ -980,9 +980,9 @@ function App() {
     }
 
     refreshprices() {
-      this.prices=[[rdint(900,1099),rdint(900,1099),rdint(900,1099),rdint(900,1099),rdint(900,1099),rdint(900,1099),rdint(900,1099),rdint(900,1099),rdint(900,1099),rdint(900,1099),rdint(900,1099),rdint(600,799),0,0,0,rdint(150,249)],
-                  [rdint(750,949),rdint(750,949),rdint(750,949),rdint(750,949),rdint(750,949),rdint(750,949),rdint(750,949),rdint(750,949),rdint(750,949),rdint(750,949),rdint(750,949),rdint(500,699),0,0,0,rdint(100,299)],
-                  [rdint(600,799),rdint(600,799),rdint(600,799),rdint(600,799),rdint(600,799),rdint(600,799),rdint(600,799),rdint(600,799),rdint(600,799),rdint(600,799),rdint(600,799),rdint(400,599),0,0,0,rdint(50,149)]][this.service-1];
+      this.prices=[[rdint(900,1099),rdint(900,1099),rdint(900,1099),rdint(900,1099),rdint(900,1099),rdint(900,1099),rdint(900,1099),rdint(900,1099),rdint(900,1099),rdint(900,1099),rdint(900,1099),rdint(750,949),0,0,0,rdint(100,199)],
+                  [rdint(750,949),rdint(750,949),rdint(750,949),rdint(750,949),rdint(750,949),rdint(750,949),rdint(750,949),rdint(750,949),rdint(750,949),rdint(750,949),rdint(750,949),rdint(600,799),0,0,0,rdint(1,99)],
+                  [rdint(600,799),rdint(600,799),rdint(600,799),rdint(600,799),rdint(600,799),rdint(600,799),rdint(600,799),rdint(600,799),rdint(600,799),rdint(600,799),rdint(600,799),rdint(500,699),0,0,0,0]][this.service-1];
     }
 
     handlehover(i) {
@@ -1268,7 +1268,15 @@ function App() {
 
     returndevice() {
       if (this.progress[3]===0) {clearInterval(this.nameinterval); buy("aban",this.sellprice,this.loc);}
-      else {sell(this.reward[0],this.loc);}
+      else {
+        sell(this.reward[0],this.loc);
+        sfixretcount(vfixretcount.current+1);
+        if (vgamemode.current>=3 && vgamemode.current<=5 && gameended===false) {
+          if (vgamemode.current===3 && vfixretcount.current>=15) {endgame();}
+          if (vgamemode.current===4 && vfixretcount.current>=30) {endgame();}
+          if (vgamemode.current===5 && vfixretcount.current>=60) {endgame();}
+        }
+      }
     }
 
     codecount(codes) {return(codes.length===2 ? codes[0].length+codes[1].length : codes[0].length)}
@@ -1287,11 +1295,6 @@ function App() {
       temp.push(addtime);
       temp.sort((a,b) => a-b);
       ssellspawn(temp);
-      if (vgamemode.current>=3 && vgamemode.current<=5 && gameended===false) {
-        if (vgamemode.current===3 && vfixcount.current>=15) {endgame();}
-        if (vgamemode.current===4 && vfixcount.current>=30) {endgame();}
-        if (vgamemode.current===5 && vfixcount.current>=50) {endgame();}
-      }
     }
 
     dpdetails() {
@@ -1609,8 +1612,11 @@ function App() {
       <div className="screenlabel">{this.virusshow}</div>
 
       <div className="scanware">{"|wireless scanware exploit activated at "+this.normalshow+"|"}<br></br>
-      {"{drivers: "+this.getdrivers()+", reward: "+(this.progress[3]===0 ? "$0+$"+this.reward[0] : "$"+this.reward[0]+(this.progress[3]===4 ? "" : "+$"+this.reward[this.progress[3]]))+
-      ", processor: [time: "+this.getbrute(0)+"s, x2: "+(this.getbrute(1)-this.getbrute(2))+"%, x3:"+this.getbrute(2)+"%]}"}</div>
+      {this.progress[3]===0 ? "{drivers: "+this.getdrivers()+", reward: "+(this.progress[3]===0 ? "$0+$"+this.reward[0] : "$"+this.reward[0]+(this.progress[3]===4 ? "" : "+$"+this.reward[this.progress[3]]))+
+      ", timeleft: "+distime(this.returntimeshow)+", decrypted: "+(this.progress[1]+this.progress[0]).toString()+"/"+this.codecount(this.codes)+"}" :
+      "{drivers: "+this.getdrivers()+", reward: "+(this.cleanready!==-1 ? "$0+$"+this.reward[0] : "$"+this.reward[0]+(this.progress[3]===4 ? "" : "+$"+this.reward[this.progress[3]]))+
+      ", timeleft: "+distime(this.returntimeshow)+", devguard sim: "+(this.getcleaninfo()[0][this.progress[3]-1]===-1 ? "N.A." : this.getcleaninfo()[0][this.progress[3]-1])+"}"}<br/>
+      {"{autotype progress: "+Math.floor(Math.min(100,this.autotypeprogress/3))+"%, bruteforcer processor: [time: "+this.getbrute(0)+"s, x2: "+(this.getbrute(1)-this.getbrute(2))+"%, x3: "+this.getbrute(2)+"%]}"}</div>
 
       <div className="linemargin">{this.displayins(this.codes[0][this.progress[0]],0)}</div>
       {this.displayinputbox(this.codes[0][this.progress[0]],this.inputboxs[0],0)}
@@ -1635,7 +1641,7 @@ function App() {
 
   function rdcode(diff) {
     function rc(t,l) {
-      const d={"l":'qwertyuiopasdfghjklzxcvbnm',"u":'QWERTYUIOPASDFGHJKLZXCVBNM',"n":'1234567890',"s":'~!@#$%^&*()+`-={}[]:;<>?,./'};
+      const d={"l":'qwertyuiopasdfghjkzxcvbnm',"u":'QWERTYUIOPASDFGHJKLZXCVBNM',"n":'1234567890',"s":'~!@#$%^&*()+`-={}[]:;<>?,./'};
       const chars=d[t];
       const charlen=chars.length;
       var o='';
@@ -1759,8 +1765,8 @@ function App() {
 
   function gencell(loc,s="e",d={},reload=false) {
     if (s==="e") {return (new Cell({"loc":loc}));}
-    const dbuildcost1=[rdint(400,599),rdint(400,599),rdint(400,599),rdint(400,599),rdint(50,149)];
-    const dbuildcost2=[rdint(400,599),rdint(400,599),rdint(400,599),rdint(400,599),rdint(900,1099),rdint(1400,1599),rdint(1900,2099),rdint(2400,2599)]; //rdint(900,1099) //1->2 30s, 2->3 60s, 3->4 120s, 4->5 180s
+    const dbuildcost1=[rdint(200,299),rdint(200,299),rdint(200,299),rdint(200,299),rdint(50,149)];
+    const dbuildcost2=[rdint(200,299),rdint(200,299),rdint(200,299),rdint(200,299),rdint(400,599),rdint(900,1099),rdint(1400,1599),rdint(1900,2099)];
     const dsellprice=d.sellprice !==null ? d.sellprice : rdint(400,599);
     const sel= d.sel || false;
     const def= d.def || false;
@@ -1768,7 +1774,7 @@ function App() {
     if (s[0]==="k") {return (reload ? new Driver(d) : new Driver({"sel":sel, "loc":loc, "def":def, "type":s, "buildcost":dbuildcost1, "sellprice":dsellprice}));}
     if (s==="tp") {return (reload ? new Touchpad(d) : new Touchpad({"sel":sel, "loc":loc, "def":def, "type":s, "buildcost":dbuildcost1, "sellprice":dsellprice}));}
     if (s==="dev") {return (reload ? new Device(d) : new Device({"sel":sel, "loc":loc, "type":s, "udlr":[true, true, true, true], "buildcost":dbuildcost1, "sellprice":dsellprice,
-    "codes":rdcodeblock(vdiff.current), "reward":[rdint(800,999),rdint(700,899),rdint(1300,1499),rdint(1900,2099)], "returntime":vtime.current+getreturntime()}));}
+    "codes":rdcodeblock(vdiff.current), "reward":[rdint(800,999),rdint(1000,1199),rdint(1400,1599),rdint(2000,2199)], "returntime":vtime.current+getreturntime()}));}
     if (s==="sw") {return (reload ? new Shopware(d) : new Shopware({"sel":sel, "def":def, "loc":loc, "type":s, "buildcost":dbuildcost2}));}
     if (s==="bf") {return (reload ? new Bruteforcer(d) : new Bruteforcer({"sel":sel, "loc":loc, "type":s, "buildcost":dbuildcost2}))}
     if (s==="dg") {return (reload ? new DevGuard(d) : new DevGuard({"sel":sel, "loc":loc, "type":s, "buildcost":dbuildcost2}))}
@@ -2137,6 +2143,8 @@ function App() {
   
   const [fixcount, sfixcount] = useState(getlocalstorage('fixcount',0));
   const vfixcount = useRef(getlocalstorage('fixcount',0));
+  const [fixretcount, sfixretcount] = useState(getlocalstorage('fixcount',0));
+  const vfixretcount = useRef(getlocalstorage('fixretcount',0));
   const [deliveryings, sdeliveryings] = useState(getlocalstorage('deliveryings',[false,false,false,false,false]));
   const vdeliveryings = useRef(getlocalstorage('deliveryings',[false,false,false,false,false]));
 
@@ -2214,6 +2222,11 @@ function App() {
     vfixcount.current=fixcount;
     localStorage.setItem('fixcount',JSON.stringify(fixcount));
   },[fixcount])
+
+  useEffect(() => {
+    vfixretcount.current=fixretcount;
+    localStorage.setItem('fixretcount',JSON.stringify(fixretcount));
+  },[fixretcount])
 
   useEffect(() => {
     vcodedb.current=codedb;
@@ -2405,9 +2418,9 @@ function App() {
         }
       }
       if (vgamemode.current>=0 && vgamemode.current<=2 && gameended===false) {
-        if (vgamemode.current===0 && time>=10*60) {endgame();}
-        if (vgamemode.current===1 && time>=20*60) {endgame();}
-        if (vgamemode.current===2 && time>=30*60) {endgame();}
+        if (vgamemode.current===0 && time>=15*60) {endgame();}
+        if (vgamemode.current===1 && time>=30*60) {endgame();}
+        if (vgamemode.current===2 && time>=60*60) {endgame();}
       }
       console.log('time: ',time,', nspawn: ',nxtspawn, 'sellspawn', sellspawn);
     }
@@ -2436,11 +2449,13 @@ function App() {
     sgamemode(startset[0]);
     sgamediff(startset[1]);
     sautoincdiffed(0);
-    scash([5000,4500,4000,3500][startset[1]]);
+    scash(4000);
     sdiff([1,6,11,16][startset[1]]);
     vdiff.current=[1,6,11,16][startset[1]];
     senableotc(startset[2]);
     senablecurse(startset[3]);
+    sfixcount(0);
+    sfixretcount(0);
     localStorage.setItem('gameset',JSON.stringify([...startset]));
 
     if (startset[0]===6 || startset[0]===8) {sstarcount(3); vstarcount.current=3;}
@@ -2506,11 +2521,11 @@ function App() {
   }
   //★★★☆☆
   function gameendstat() {
-    return(<>You fixed <span style={{"color":"#ff0"}}>{fixcount} </span> device{fixcount===1 ? "": "s"} in <span  style={{"color":"#f0f"}}> {distime(vtime.current)} </span> with <span style={{"color":"#0f0"}}> ${vcash.current} </span> left!</>)
+    return(<>You fixed <span style={{"color":"#ff0"}}>{fixretcount} </span> device{fixretcount===1 ? "": "s"} in <span  style={{"color":"#f0f"}}> {distime(vtime.current)} </span> with <span style={{"color":"#0f0"}}> ${vcash.current} </span> left!</>)
   }
 
   function disgamemode() {
-    return(["Best in 20 minutes","Best in 40 minutes","Best in 60 minutes","Fastest to 30 fixes","Fastest to 60 fixes","Fastest to 100 fixes",
+    return(["Best in 15 minutes","Best in 30 minutes","Best in 60 minutes","Fastest to 30 fixes","Fastest to 60 fixes","Fastest to 100 fixes",
       ["3☆ St☆r-keep☆r","3★ St☆r-keep☆r","3★ St★r-keep☆r","3★ St★r-keep★r"][vstarcount.current],
       ["5☆ St☆r-k☆☆p☆r","5★ St☆r-k☆☆p☆r","5★ St★r-k☆☆p☆r","5★ St★r-k★☆p☆r","5★ St★r-k★★p☆r","5★ St★r-k★★p★r"][vstarcount.current],
       ["3☆ Regen St☆r-keep☆r","3★ Regen St☆r-keep☆r","3★ Regen St★r-keep☆r","3★ Regen St★r-keep★r"][vstarcount.current],
@@ -2544,7 +2559,7 @@ function App() {
       <a href="https://fly.undarr.com/decryptinator/" target="_blank" rel="noreferrer"><button className="startbutton">How to Play</button></a>
       <button className="startbutton" onClick={() => {sstartingframe(21);}}>View High Scores</button></>
       :<>{ongoinggame ? <button className="startbutton" onClick={() => {sstartingframe(1); sframe(getlocalstorage('frame',-1));}}><div style={{"fontSize":"min(2.5vw,5vh)"}}>Continue Game</div>
-        <div style={{"fontSize":"min(1vw,2vh)"}}>{disgamemode()}, <span className="cash">${cash}</span>, <span className="time">{distime(time)}</span>, <span className="diff">💀{"<"}{diff}{"/60>"}</span>, Fixed {"<"}{fixcount}{">"}</div></button>
+        <div style={{"fontSize":"min(1vw,2vh)"}}>{disgamemode()}, <span className="cash">${cash}</span>, <span className="time">{distime(time)}</span>, <span className="diff">💀{"<"}{diff}{"/60>"}</span>, Fixed {"<"}{fixretcount}{">"}</div></button>
       : <button className="startbutton disabled">Continue Game</button>}
       {ongoinggame ? <button className="startbutton" onClick={() => {sstartingframe(111);}}><div style={{"fontSize":"min(2.5vw,5vh)"}}>Start New Game</div>
       <div style={{"fontSize":"min(1vw,2vh)"}}>⚠ Warning, starting a new game will wipe the progress of the current game ⚠</div></button>
@@ -2568,12 +2583,12 @@ function App() {
       <div id="starttitle">D☣cryptinator</div>
       <div>
       <div id="startdes">Gamemode: (Click to select)</div>
-      <button className="startbutton2" style={getstyle("15%","min(4vw,8vh)",0,0)} onClick={() => {sstartsetx(0,0);}}>10 mins</button>
-      <button className="startbutton2" style={getstyle("15%","min(4vw,8vh)",0,1)} onClick={() => {sstartsetx(0,1);}}>20 mins</button>
-      <button className="startbutton2" style={getstyle("15%","min(4vw,8vh)",0,2)} onClick={() => {sstartsetx(0,2);}}>30 mins</button>
+      <button className="startbutton2" style={getstyle("15%","min(4vw,8vh)",0,0)} onClick={() => {sstartsetx(0,0);}}>15 mins</button>
+      <button className="startbutton2" style={getstyle("15%","min(4vw,8vh)",0,1)} onClick={() => {sstartsetx(0,1);}}>30 mins</button>
+      <button className="startbutton2" style={getstyle("15%","min(4vw,8vh)",0,2)} onClick={() => {sstartsetx(0,2);}}>60 mins</button>
       <button className="startbutton2" style={getstyle("15%","min(4vw,8vh)",0,3)} onClick={() => {sstartsetx(0,3);}}>15 fixes</button>
       <button className="startbutton2" style={getstyle("15%","min(4vw,8vh)",0,4)} onClick={() => {sstartsetx(0,4);}}>30 fixes</button>
-      <button className="startbutton2" style={getstyle("15%","min(4vw,8vh)",0,5)} onClick={() => {sstartsetx(0,5);}}>50 fixes</button>
+      <button className="startbutton2" style={getstyle("15%","min(4vw,8vh)",0,5)} onClick={() => {sstartsetx(0,5);}}>60 fixes</button>
       <button className="startbutton2" style={getstyle("15%","min(4vw,8vh)",0,6)} onClick={() => {sstartsetx(0,6);}}>3 Stars</button>
       <button className="startbutton2" style={getstyle("15%","min(4vw,8vh)",0,7)} onClick={() => {sstartsetx(0,7);}}>5 Stars</button>
       <button className="startbutton2 disabled" style={getstyle("15%","min(4vw,8vh)",0,8)} onClick={() => {sstartsetx(0,8);}}>3 StarsR</button>
@@ -2645,7 +2660,7 @@ function App() {
           <td className="topbar taright bd cash" colSpan="2">${cash}</td>
           <td className="topbar taright bd time" colSpan="2">{distime(time)} +</td>
           <td className="topbar taright bd diff" colSpan="2">💀{"<"}{diff}{"/60>"}</td>
-          <td className="topbar taright bd" colSpan="2">Fixed {"<"}{fixcount}{">"}</td>
+          <td className="topbar taright bd" colSpan="2">Fixed {"<"}{fixretcount}{">"}</td>
         </tr>
         {showsetup()}
       </tbody>
@@ -2660,7 +2675,7 @@ function App() {
           <td className="topbar taright cash" colSpan="2">${cash}</td>
           <td className="topbar taright time" colSpan="2">{distime(time)} +</td>
           <td className="topbar taright diff" colSpan="2">💀{"<"}{diff}{"/60>"}</td>
-          <td className="topbar taright" colSpan="2">Fixed {"<"}{fixcount}{">"}</td>
+          <td className="topbar taright" colSpan="2">Fixed {"<"}{fixretcount}{">"}</td>
         </tr>
         <tr>
           <td className="tsscreen" colSpan="6">
