@@ -59,10 +59,10 @@ footer {
 .frame {
   margin: 0;
   position: absolute;
-  top: 10vh;
-  left: 18vh;
-  width: 175vh;
-  height: 80vh;
+  top: min(5vw,10vh);
+  left: 8%;
+  width: min(87.5vw,175vh);
+  height: min(40vw,80vh);
 }
 
 .hide {
@@ -78,24 +78,24 @@ table {
 }
 
 table.setup {
-  width: 168vh;
-  height: 64vh;
+  width: min(84vw,168vh);
+  height: min(32vw,64vh);
 }
 
 .topbar {
-  width: 12vh;
-  height: 4vh;
+  width: min(6vw,12vh);
+  height: min(2vw,4vh);
   font-family: "Playpen Sans", sans-serif;
-  font-size: 2.5vh;
+  font-size: min(1.25vw,2.5vh);
   font-style: italic;
   text-align: center;
   vertical-align: bottom;
-  padding: 0 0.5vh;
+  padding: 0 min(0.25vw,0.5vh);
 }
 
 table td.setup {
-  width : 12vh;
-  height : 12vh;
+  width : min(6vw,12vh);
+  height : min(6vw,12vh);
 }
 
 button {
@@ -107,7 +107,7 @@ button {
   background-size: 100% 100%;
   background-repeat: no-repeat;
   border: none;
-  border-radius: 1vh;
+  border-radius: min(0.5vw,1vh);
   color: #000;
 }
 
@@ -120,19 +120,19 @@ button:hover {
 }
 
 .bu {
-  border-top: 0.3vh solid #888;
+  border-top: min(0.15vw,0.3vh) solid #888;
 }
 
 .bl {
-  border-left: 0.3vh solid #888;
+  border-left: min(0.15vw,0.3vh) solid #888;
 }
 
 .br {
-  border-right: 0.3vh solid #888;
+  border-right: min(0.15vw,0.3vh) solid #888;
 }
 
 .bd {
-  border-bottom: 0.3vh solid #888;
+  border-bottom: min(0.15vw,0.3vh) solid #888;
 }
 
 button:focus {
@@ -142,14 +142,14 @@ button:focus {
 .details {
   font-family: monospace, sans-serif;
   text-align: center;
-  font-size: 2.5vh;
+  font-size: min(1.25vw,2.5vh);
 
   width : 100%;
-  height: 12vh;
+  height: min(6vw,12vh);
   padding : 0.4em;
   border-style: solid;
   margin-top: 1.5%;
-  border-width: 0.4vh;
+  border-width: min(0.2vw,0.4vh);
   border-radius: 25px;
 }
 
@@ -165,20 +165,20 @@ button:focus {
 
 .dbutton {
   text-align: center;
-  font-size: 1.6vh;
-  width : 15vh;
-  height: 5vh;
-  margin: 0 0.4vh;
-  padding: 0.2vh 0;
+  font-size: min(0.8vw,1.6vh);
+  width : min(7.5vw,15vh);
+  height: min(2.5vw,5vh);
+  margin: 0 min(0.2vw,0.4vh);
+  padding: min(0.1vw,0.2vh) 0;
   border-style: solid;
   border-color:#000;
-  border-width: 0.4vh;
+  border-width: min(0.2vw,0.4vh);
 }
 
 .dbutton:hover {
   border-style: solid;
   border-color:#000;
-  border-width: 0.4vh;
+  border-width: min(0.2vw,0.4vh);
 }
 
 .disabled {
@@ -282,27 +282,27 @@ button:focus {
 }
 
 .xxlongb {
-  width : 30vh;
+  width : min(15vw,30vh);
 }
 
 .xlongb {
-  width : 25vh;
+  width : min(12.5vw,25vh);
 }
 
 .longb {
-  width : 20vh;
+  width : min(10vw,20vh);
 }
 
 .tstable {
-  width: 168vh;
-  height: 80vh;
+  width: min(84vw,168vh);
+  height: min(40vw,80vh);
   border-style: solid;
   border-radius: 2px;
 }
 
 .tsscreen {
-  width: 72vh;
-  height: 38vh;
+  width: min(36vw,72vh);
+  height: min(19vw,38vh);
   border-style: solid;
   position: relative;
 }
@@ -313,11 +313,11 @@ button:focus {
 }
 
 #wirelessinfo {
-  width: 24vh;
-  height: 76vh;
+  width: min(12vw,24vh);
+  height: min(38vw,76vh);
   border-style: solid;
   font-family: "Shantell Sans", sans-serif;
-  font-size: 2.5vh;
+  font-size: min(1.25vw,2.5vh);
   font-style: italic;
   text-align: center;
   position: relative;
@@ -331,18 +331,18 @@ button:focus {
 
 #poslabel {
   position: absolute;
-  top: 0.5vh;
-  left: 0.5vh;
-  font-size: 1.5vh;
+  top: min(0.25vw,0.5vh);
+  left: min(0.25vw,0.5vh);
+  font-size: min(0.75vw,1.5vh);
 }
 
 #gcodesframe {
   width: 80%;
   left: 10%;
-  height: 38vh;
+  height: min(19vw,38vh);
   text-align: center;
   border-style: solid;
-  font-size: 2vh;
+  font-size: min(1vw,2vh);
   position: relative;
   background-color: #fff;
 }
@@ -379,19 +379,19 @@ button:focus {
 #backtosetupdiv {
   position: absolute;
   left: 10%;
-  bottom: 3vh;
+  bottom: min(1.5vw,3vh);
   width: 80%;
 }
 
 #backtosetupbtn {
   border-style: solid;
   border-color:#000;
-  font-size: 1.5vh;
+  font-size: min(0.75vw,1.5vh);
   padding: 2%;
 }
 
 #nosig {
-  font-size: 10vh;
+  font-size: min(5vw,10vh);
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-style: italic;
 }
@@ -457,18 +457,18 @@ button:focus {
 }
 
 .screenlabel{
-  font-size: 4.5vh;
+  font-size: min(2.25vw,4.5vh);
   font-family: monospace;
   font-style: italic;
 }
 
 .virusins{
-  font-size: 2vh;
+  font-size: min(1vw,2vh);
   font-family: monospace;
 }
 
 .scanware{
-  font-size: 1.5vh;
+  font-size: min(0.75vw,1.5vh);
   font-family: monospace;
   color: #888;
 }
@@ -484,38 +484,38 @@ button:focus {
 }
 
 .codeinputbox {
-  font-size: 2vh;
+  font-size: min(1vw,2vh);
   font-family: Courier, monospace;
   font-weight: normal;
   border-style: solid;
   border-color: #000;
   background-color: #fff;
   width: 50%;
-  height: 4vh;
-  margin: 0vh 0.4vh;
+  height: min(2vw,4vh);
+  margin: 0vh min(0.2vw,0.4vh);
 }
 
 .getdgbtn {
-  font-size: 2vh;
+  font-size: min(1vw,2vh);
   font-family: Courier, monospace;
   font-weight: normal;
   border-style: solid;
   border-color: #000;
   background-color: #fff;
   width: 90%;
-  height: 4vh;
-  margin: 0vh 0.4vh;
+  height: min(2vw,4vh);
+  margin: 0vh min(0.2vw,0.4vh);
 }
 
 .submitcodebtn {
-  font-size: 2vh;
+  font-size: min(1vw,2vh);
   font-weight: normal;
   border-style: solid;
   border-color: #000;
   background-color: #fff;
   width: 30%;
-  height: 4vh;
-  margin: 0vh 0.4vh;
+  height: min(2vw,4vh);
+  margin: 0vh min(0.2vw,0.4vh);
 }
 
 .codeinputbox:hover{
@@ -539,12 +539,12 @@ button:focus {
 }
 
 .linemargin {
-  margin: 0.5vh;
+  margin: min(0.25vw,0.5vh);
 }
 
 .warnnote {
   color: #e60000;
-  font-size: 1.5vh;
+  font-size: min(0.75vw,1.5vh);
 }
 
 .cash {
@@ -553,12 +553,12 @@ button:focus {
 
 .whitebgfont {
   background-color: #fff;
-  font-size: 1.6vh;
+  font-size: min(0.8vw,1.6vh);
 }
 
 .whitebgsfont {
   background-color: #fff;
-  font-size: 1.3vh;
+  font-size: min(0.65vw,1.3vh);
 }
 
 .time {
@@ -570,33 +570,33 @@ button:focus {
 }
 
 .shoptable {
-  width : 54vh;
-  height: 21vh;
+  width : min(27vw,54vh);
+  height: min(10.5vw,21vh);
   border: solid;
   table-layout: fixed;
 }
 
 .shopblock {
-  width : 9vh;
-  height : 9vh;
+  width : min(4.5vw,9vh);
+  height : min(4.5vw,9vh);
   border: solid;
 }
 
 .shoptable button {
-  font-size: 1.5vh;
+  font-size: min(0.75vw,1.5vh);
   border-radius: 0;
 }
 
 .shopcode {
-  height : 3vh;
+  height : min(1.5vw,3vh);
   border-radius: 0;
   border: solid;
 }
 
 .shopupinfo {
-  width : 45vh;
-  height : 3vh;
-  font-size: 1.6vh;
+  width : min(22.5vw,45vh);
+  height : min(1.5vw,3vh);
+  font-size: min(0.8vw,1.6vh);
   font-family: monospace, sans-serif;
   font-weight: bolder;
   text-align: center;
@@ -606,7 +606,7 @@ button:focus {
   font-family: Courier, monospace;
   font-weight: normal;
   background-color: #FFFF00;
-  padding: 0.3vh inherit;
+  padding: min(0.15vw,0.3vh) inherit;
   font-style: normal;
 }
 
@@ -615,13 +615,13 @@ button:focus {
 }
 
 #starttitle {
-  font-size: 15vh;
+  font-size: min(7.5vw,15vh);
   font-family: "Audiowide", sans-serif;
   font-style: italic;
 }
 
 #startdes {
-  font-size: 5vh;
+  font-size: min(2.5vw,5vh);
   font-family: "Shantell Sans", sans-serif;
   font-style: italic;
 }
@@ -632,70 +632,70 @@ button:focus {
 
 .startbutton {
   text-align: center;
-  font-size: 6vh;
+  font-size: min(3vw,6vh);
   width : 50%;
-  height: 12vh;
+  height: min(6vw,12vh);
   font-family: "Playpen Sans", sans-serif;
-  margin: 2vh 0.4vh 0vh 0.4vh;
-  padding: 0.2vh 0;
+  margin: min(1vw,2vh) min(0.2vw,0.4vh) 0vh min(0.2vw,0.4vh);
+  padding: min(0.1vw,0.2vh) 0;
   border-style: solid;
   border-color:#000;
-  border-width: 0.4vh;
-  border-radius: 4vh;
+  border-width: min(0.2vw,0.4vh);
+  border-radius: min(2vw,4vh);
 }
 
 .startbutton2 {
   text-align: center;
-  font-size: 4vh;
+  font-size: min(2vw,4vh);
   font-family: "Playpen Sans", sans-serif;
   width : 15%;
-  height: 8vh;
-  margin: 1vh 0.4vh 0vh 0.4vh;
-  padding: 0.2vh 0;
+  height: min(4vw,8vh);
+  margin: min(0.5vw,1vh) min(0.2vw,0.4vh) 0vh min(0.2vw,0.4vh);
+  padding: min(0.1vw,0.2vh) 0;
   border-style: solid;
   border-color:#000;
-  border-width: 0.4vh;
-  border-radius: 4vh;
+  border-width: min(0.2vw,0.4vh);
+  border-radius: min(2vw,4vh);
 }
 
 .startbutton3 {
   text-align: center;
-  font-size: 4vh;
+  font-size: min(2vw,4vh);
   font-family: "Playpen Sans", sans-serif;
   width : 15%;
-  height: 8vh;
-  margin: 1vh 0.4vh 0vh 0.4vh;
-  padding: 0.2vh 0;
+  height: min(4vw,8vh);
+  margin: min(0.5vw,1vh) min(0.2vw,0.4vh) 0vh min(0.2vw,0.4vh);
+  padding: min(0.1vw,0.2vh) 0;
   border-style: solid;
   border-color:#0AA;
   background-color: #99EDC3;
-  border-width: 0.4vh;
-  border-radius: 4vh;
+  border-width: min(0.2vw,0.4vh);
+  border-radius: min(2vw,4vh);
 }
 
 .pausebutton {
   margin: 0;
   position: absolute;
-  font-size: 3vh;
-  top: 10vh;
-  right: 5vh;
-  width : 10vh;
-  height: 10vh;
+  font-size: min(1.5vw,3vh);
+  top: min(5vw,10vh);
+  right: min(2.5vw,5vh);
+  width : min(5vw,10vh);
+  height: min(5vw,10vh);
   border-style: solid;
   border-color:#888;
-  border-width: 0.4vh;
-  border-radius: 2vh;
+  border-width: min(0.2vw,0.4vh);
+  border-radius: min(1vw,2vh);
 }
 
 #pausetitle {
-  font-size: 15vh;
+  font-size: min(7.5vw,15vh);
   font-family: "Audiowide", sans-serif;
   font-style: italic;
   color: #ffffff;
 }
 
 #pausedes {
-  font-size: 5vh;
+  font-size: min(2.5vw,5vh);
   font-family: "Shantell Sans",sans-serif;
   font-style: italic;
   color: #ffffff;

@@ -1082,7 +1082,7 @@ function App() {
       const sd={};
       sd["borderWidth"]=0;
       if (i<12) {
-        sd["fontSize"]="1.8vh";
+        sd["fontSize"]="min(0.9vw,1.8vh)";
         sd["backgroundImage"]="url(./img/blocks/"+["kl","ku","kn","ks","tp","sw","km","bf","dg","lc","cm","mb"][i]+".gif)";
         if (this.prices[i]>vcash.current && this.buying===-1 && !this.locked[i]) {
           sd["opacity"]=0.5;
@@ -1288,9 +1288,9 @@ function App() {
       temp.sort((a,b) => a-b);
       ssellspawn(temp);
       if (vgamemode.current>=3 && vgamemode.current<=5 && gameended===false) {
-        if (vgamemode.current===3 && vfixcount.current>=30) {endgame();}
-        if (vgamemode.current===4 && vfixcount.current>=60) {endgame();}
-        if (vgamemode.current===5 && vfixcount.current>=100) {endgame();}
+        if (vgamemode.current===3 && vfixcount.current>=15) {endgame();}
+        if (vgamemode.current===4 && vfixcount.current>=30) {endgame();}
+        if (vgamemode.current===5 && vfixcount.current>=50) {endgame();}
       }
     }
 
@@ -1855,7 +1855,7 @@ function App() {
       temp2.push(addtime);
       temp2.sort((a,b) => a-b);
       ssellspawn(temp2);
-      if (vgamemode.current>=6 && vgamemode.current<=9 && gameended==false) {
+      if (vgamemode.current>=6 && vgamemode.current<=9 && gameended===false) {
         sstarstreak(0);
         sstarcount(vstarcount.current-1);
         if (vstarcount.current-1===0) {endgame();}
@@ -2405,9 +2405,9 @@ function App() {
         }
       }
       if (vgamemode.current>=0 && vgamemode.current<=2 && gameended===false) {
-        if (vgamemode.current===0 && time>=20*60) {endgame();}
-        if (vgamemode.current===1 && time>=40*60) {endgame();}
-        if (vgamemode.current===2 && time>=60*60) {endgame();}
+        if (vgamemode.current===0 && time>=10*60) {endgame();}
+        if (vgamemode.current===1 && time>=20*60) {endgame();}
+        if (vgamemode.current===2 && time>=30*60) {endgame();}
       }
       console.log('time: ',time,', nspawn: ',nxtspawn, 'sellspawn', sellspawn);
     }
@@ -2482,6 +2482,10 @@ function App() {
     ssellspawn([]);
     spleakspawn([]);
     spawndev(2);
+    sgcodedb({"noteh":[], "notes":[], "notep":[], "noteu":[]});
+    sggcodedb({"noteh":[], "notes":[], "notep":[], "noteu":[]});
+    sgcodeshow({"noteh":[], "notes":[], "notep":[], "noteu":[]});
+
     console.log(vstate.current);
 
     songoinggame(true); localStorage.setItem('ongoinggame',JSON.stringify(true));
@@ -2510,7 +2514,7 @@ function App() {
       ["5☆ St☆r-k☆☆p☆r","5★ St☆r-k☆☆p☆r","5★ St★r-k☆☆p☆r","5★ St★r-k★☆p☆r","5★ St★r-k★★p☆r","5★ St★r-k★★p★r"][vstarcount.current],
       ["3☆ Regen St☆r-keep☆r","3★ Regen St☆r-keep☆r","3★ Regen St★r-keep☆r","3★ Regen St★r-keep★r"][vstarcount.current],
       ["5☆ Regen St☆r-k☆☆p☆r","5★ Regen St☆r-k☆☆p☆r","5★ Regen St★r-k☆☆p☆r","5★ Regen St★r-k★☆p☆r","5★ Regen St★r-k★★p☆r","5★ Regen St★r-k★★p★r"][vstarcount.current],
-      "Rental","Sandbox"][vgamemode.current]+" <"+(defaultgame ? "" : "*")+["E","N","H","I"][gamediff]+(gameended ? "∞" : "")+">")
+      "Rental","Sandbox"][vgamemode.current]+" <"+(defaultgame ? "" : "*")+["E","N","H","💀"][gamediff]+(gameended ? "∞" : "")+">")
   }
 
   function startingmenu(n) {
@@ -2538,11 +2542,11 @@ function App() {
       <><button className="startbutton" onClick={() => {sstartingframe(11);}}>Start Game</button>
       <a href="https://fly.undarr.com/decryptinator/" target="_blank" rel="noreferrer"><button className="startbutton">How to Play</button></a>
       <button className="startbutton" onClick={() => {sstartingframe(21);}}>View High Scores</button></>
-      :<>{ongoinggame ? <button className="startbutton" onClick={() => {sstartingframe(1); sframe(getlocalstorage('frame',-1));}}><div style={{"fontSize":"5vh"}}>Continue Game</div>
-        <div style={{"fontSize":"2vh"}}>{disgamemode()}, <span className="cash">${cash}</span>, <span className="time">{distime(time)}</span>, <span className="diff">💀{"<"}{diff}{"/60>"}</span>, Fixed {"<"}{fixcount}{">"}</div></button>
+      :<>{ongoinggame ? <button className="startbutton" onClick={() => {sstartingframe(1); sframe(getlocalstorage('frame',-1));}}><div style={{"fontSize":"min(2.5vw,5vh)"}}>Continue Game</div>
+        <div style={{"fontSize":"min(1vw,2vh)"}}>{disgamemode()}, <span className="cash">${cash}</span>, <span className="time">{distime(time)}</span>, <span className="diff">💀{"<"}{diff}{"/60>"}</span>, Fixed {"<"}{fixcount}{">"}</div></button>
       : <button className="startbutton disabled">Continue Game</button>}
-      {ongoinggame ? <button className="startbutton" onClick={() => {sstartingframe(111);}}><div style={{"fontSize":"5vh"}}>Start New Game</div>
-      <div style={{"fontSize":"2vh"}}>⚠ Warning, starting a new game will wipe the progress of the current game ⚠</div></button>
+      {ongoinggame ? <button className="startbutton" onClick={() => {sstartingframe(111);}}><div style={{"fontSize":"min(2.5vw,5vh)"}}>Start New Game</div>
+      <div style={{"fontSize":"min(1vw,2vh)"}}>⚠ Warning, starting a new game will wipe the progress of the current game ⚠</div></button>
       : <button className="startbutton" onClick={() => {sstartingframe(111);}}>Start New Game</button>}
       <button className="startbutton" onClick={() => {sstartingframe(1);}}>Back</button></>
       }
@@ -2563,32 +2567,32 @@ function App() {
       <div id="starttitle">D☣cryptinator</div>
       <div>
       <div id="startdes">Gamemode: (Click to select)</div>
-      <button className="startbutton2" style={getstyle("15%","8vh",0,0)} onClick={() => {sstartsetx(0,0);}}>20 mins</button>
-      <button className="startbutton2" style={getstyle("15%","8vh",0,1)} onClick={() => {sstartsetx(0,1);}}>40 mins</button>
-      <button className="startbutton2" style={getstyle("15%","8vh",0,2)} onClick={() => {sstartsetx(0,2);}}>60 mins</button>
-      <button className="startbutton2" style={getstyle("15%","8vh",0,3)} onClick={() => {sstartsetx(0,3);}}>30 fixes</button>
-      <button className="startbutton2" style={getstyle("15%","8vh",0,4)} onClick={() => {sstartsetx(0,4);}}>60 fixes</button>
-      <button className="startbutton2" style={getstyle("15%","8vh",0,5)} onClick={() => {sstartsetx(0,5);}}>100 fixes</button>
-      <button className="startbutton2" style={getstyle("15%","8vh",0,6)} onClick={() => {sstartsetx(0,6);}}>3 Stars</button>
-      <button className="startbutton2" style={getstyle("15%","8vh",0,7)} onClick={() => {sstartsetx(0,7);}}>5 Stars</button>
-      <button className="startbutton2 disabled" style={getstyle("15%","8vh",0,8)} onClick={() => {sstartsetx(0,8);}}>3 StarsR</button>
-      <button className="startbutton2 disabled" style={getstyle("15%","8vh",0,9)} onClick={() => {sstartsetx(0,9);}}>5 StarsR</button>
-      <button className="startbutton2 disabled" style={getstyle("15%","8vh",0,10)} onClick={() => {sstartsetx(0,10);}}>Rental</button>
-      <button className="startbutton2" style={getstyle("15%","8vh",0,11)} onClick={() => {sstartsetx(0,11);}}>Sandbox</button>
+      <button className="startbutton2" style={getstyle("15%","min(4vw,8vh)",0,0)} onClick={() => {sstartsetx(0,0);}}>10 mins</button>
+      <button className="startbutton2" style={getstyle("15%","min(4vw,8vh)",0,1)} onClick={() => {sstartsetx(0,1);}}>20 mins</button>
+      <button className="startbutton2" style={getstyle("15%","min(4vw,8vh)",0,2)} onClick={() => {sstartsetx(0,2);}}>30 mins</button>
+      <button className="startbutton2" style={getstyle("15%","min(4vw,8vh)",0,3)} onClick={() => {sstartsetx(0,3);}}>15 fixes</button>
+      <button className="startbutton2" style={getstyle("15%","min(4vw,8vh)",0,4)} onClick={() => {sstartsetx(0,4);}}>30 fixes</button>
+      <button className="startbutton2" style={getstyle("15%","min(4vw,8vh)",0,5)} onClick={() => {sstartsetx(0,5);}}>50 fixes</button>
+      <button className="startbutton2" style={getstyle("15%","min(4vw,8vh)",0,6)} onClick={() => {sstartsetx(0,6);}}>3 Stars</button>
+      <button className="startbutton2" style={getstyle("15%","min(4vw,8vh)",0,7)} onClick={() => {sstartsetx(0,7);}}>5 Stars</button>
+      <button className="startbutton2 disabled" style={getstyle("15%","min(4vw,8vh)",0,8)} onClick={() => {sstartsetx(0,8);}}>3 StarsR</button>
+      <button className="startbutton2 disabled" style={getstyle("15%","min(4vw,8vh)",0,9)} onClick={() => {sstartsetx(0,9);}}>5 StarsR</button>
+      <button className="startbutton2 disabled" style={getstyle("15%","min(4vw,8vh)",0,10)} onClick={() => {sstartsetx(0,10);}}>Rental</button>
+      <button className="startbutton2" style={getstyle("15%","min(4vw,8vh)",0,11)} onClick={() => {sstartsetx(0,11);}}>Sandbox</button>
       </div>
       <div>
       <div id="startdes">Game difficulty: (Click to select)</div>
-      <button className="startbutton2" style={getstyle("15%","8vh",1,0)} onClick={() => {sstartsetx(1,0);}}>Easy</button>
-      <button className="startbutton2" style={getstyle("15%","8vh",1,1)} onClick={() => {sstartsetx(1,1);}}>Normal</button>
-      <button className="startbutton2" style={getstyle("15%","8vh",1,2)} onClick={() => {sstartsetx(1,2);}}>Hard</button>
-      <button className="startbutton2" style={getstyle("15%","8vh",1,3)} onClick={() => {sstartsetx(1,3);}}>Insane</button>
+      <button className="startbutton2" style={getstyle("15%","min(4vw,8vh)",1,0)} onClick={() => {sstartsetx(1,0);}}>Easy</button>
+      <button className="startbutton2" style={getstyle("15%","min(4vw,8vh)",1,1)} onClick={() => {sstartsetx(1,1);}}>Normal</button>
+      <button className="startbutton2" style={getstyle("15%","min(4vw,8vh)",1,2)} onClick={() => {sstartsetx(1,2);}}>Hard</button>
+      <button className="startbutton2" style={getstyle("15%","min(4vw,8vh)",1,3)} onClick={() => {sstartsetx(1,3);}}>Insane</button>
       </div>
       <br></br>
       <br></br>
       <br></br>
-      <button className="startbutton2" style={getstyle("15%","8vh")} onClick={() => {sstartingframe(11);}}>Back</button>
-      <button className="startbutton2 disabled" style={getstyle("30%","8vh")} onClick={() => {}}>Further Customize</button>
-      <button className="startbutton2" style={getstyle("30%","8vh")} onClick={() => {startnewgame();}}>Start New Game!</button>
+      <button className="startbutton2" style={getstyle("15%","min(4vw,8vh)")} onClick={() => {sstartingframe(11);}}>Back</button>
+      <button className="startbutton2 disabled" style={getstyle("30%","min(4vw,8vh)")} onClick={() => {}}>Further Customize</button>
+      <button className="startbutton2" style={getstyle("30%","min(4vw,8vh)")} onClick={() => {startnewgame();}}>Start New Game!</button>
       </>)
     }
     if (n===1111) {
@@ -2599,9 +2603,9 @@ function App() {
 
         </div>
         <br></br>
-        <button className="startbutton2" style={getstyle("15%","8vh")} onClick={() => {sstartingframe(11);}}>Back</button>
-        <button className="startbutton2 disabled" style={getstyle("30%","8vh")} onClick={() => {}}>Further customize</button>
-        <button className="startbutton2" style={getstyle("30%","8vh")} onClick={() => {startnewgame();}}>Start New Game!</button>
+        <button className="startbutton2" style={getstyle("15%","min(4vw,8vh)")} onClick={() => {sstartingframe(11);}}>Back</button>
+        <button className="startbutton2 disabled" style={getstyle("30%","min(4vw,8vh)")} onClick={() => {}}>Further customize</button>
+        <button className="startbutton2" style={getstyle("30%","min(4vw,8vh)")} onClick={() => {startnewgame();}}>Start New Game!</button>
         </>)
     }
   }
@@ -2681,13 +2685,13 @@ function App() {
               <div id="gcodesframe">
                   <table id="gcodestable">
                     <tbody>
-                    <tr style={{"height":"2.5vh"}}>
-                      <td style={{"height":"2.5vh"}}><button className={gcodeshow==="noteh" ? "gcodeshowbsel" : "gcodeshowb"} onClick={() => {sgcodeshow("noteh"); rfs();}}>HCK</button></td>
-                      <td style={{"height":"2.5vh"}}><button className={gcodeshow==="notep" ? "gcodeshowbsel" : "gcodeshowb"} onClick={() => {sgcodeshow("notep"); rfs();}}>PIN</button></td>
-                      <td style={{"height":"2.5vh"}}><button className={gcodeshow==="notes" ? "gcodeshowbsel" : "gcodeshowb"} onClick={() => {sgcodeshow("notes"); rfs();}}>SEC</button></td>
-                      <td style={{"height":"2.5vh"}}><button className={gcodeshow==="noteu" ? "gcodeshowbsel" : "gcodeshowb"} onClick={() => {console.log(codedb, gcodedb); sgcodeshow("noteu"); rfs();}}>UNI</button></td>
+                    <tr style={{"height":"min(1.25vw,2.5vh)"}}>
+                      <td style={{"height":"min(1.25vw,2.5vh)"}}><button className={gcodeshow==="noteh" ? "gcodeshowbsel" : "gcodeshowb"} onClick={() => {sgcodeshow("noteh"); rfs();}}>HCK</button></td>
+                      <td style={{"height":"min(1.25vw,2.5vh)"}}><button className={gcodeshow==="notep" ? "gcodeshowbsel" : "gcodeshowb"} onClick={() => {sgcodeshow("notep"); rfs();}}>PIN</button></td>
+                      <td style={{"height":"min(1.25vw,2.5vh)"}}><button className={gcodeshow==="notes" ? "gcodeshowbsel" : "gcodeshowb"} onClick={() => {sgcodeshow("notes"); rfs();}}>SEC</button></td>
+                      <td style={{"height":"min(1.25vw,2.5vh)"}}><button className={gcodeshow==="noteu" ? "gcodeshowbsel" : "gcodeshowb"} onClick={() => {console.log(codedb, gcodedb); sgcodeshow("noteu"); rfs();}}>UNI</button></td>
                     </tr>
-                    <tr><td colSpan="4" style={{"borderTop":"solid", "verticalAlign":"top", "paddingTop":"1vh"}}>
+                    <tr><td colSpan="4" style={{"borderTop":"solid", "verticalAlign":"top", "paddingTop":"min(0.5vw,1vh)"}}>
                     {symtoname(gcodeshow)}s:<br></br>
                     {gcodedb[gcodeshow].length===0 ? <>*empty*</>: gcodedb[gcodeshow].map((i) => (
                     <>{i.autotyping ? <span className="normalfont">🖮</span> : <></>}{i.qgen ? <span className="normalfont">🛜</span> : <></>}{i.autotyping || i.qgen ? " " : ""}<span className="codeinput">{i.code}</span><br></br></>))}
