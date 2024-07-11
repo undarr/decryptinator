@@ -496,8 +496,9 @@ function App() {
   class Multidriver extends Block {
     constructor(d) {
       super(d);
+      this.level=2;
       this.drivers=d.drivers || [];
-      this.capacity=Math.max(this.drivers.length,1);
+      this.capacity=Math.max(this.drivers.length,2);
     }
 
     getattridict() {
@@ -560,7 +561,7 @@ function App() {
       this.brutetime=d.brutetime!==undefined ? d.brutetime : 5 ; //4 3 2 1
       this.break2p= d.break2p || 0; //40 70 100 100
       this.break3= d.break3 || 0; //10 30 50 80
-      this.auto= d.auto || 0; //10 12 15 20 -> 300
+      this.auto= d.auto || 0; //12 15 20 30 -> 120 //30 25 20 15, 10, 8, 6, 4, 120
     }
 
     getattridict() {
@@ -589,7 +590,7 @@ function App() {
       this.level+=1;
       this.brutetime=[7,5,4,3,2,1][this.level];
       if (c==="pb") {this.upath=1; this.break2p=[0,0,40,70,100,100][this.level]; this.break3=[0,0,10,30,50,80][this.level];}
-      else if (c==="at") {this.upath=2; this.auto=[0,0,10,12,15,20][this.level];}
+      else if (c==="at") {this.upath=2; this.auto=[0,0,12,15,20,30][this.level];}
     }
 
     getstyle() {
@@ -635,7 +636,7 @@ function App() {
     const cost=this.buildcost[3+this.level];
     const utime=this.upgradetime[Math.min(this.level-1,this.upgradetime.length-1)];
     return (<>
-    {this.codedif===3 ? <></> : <button className={vcash.current<cost ? "dbutton disabled longb" : "dbutton longb"} onClick={() => {buy("sim",cost);}}>Upgrade Simplicity<br></br>with ${cost} ({utime}s)</button>}
+    {this.codediff===3 ? <></> : <button className={vcash.current<cost ? "dbutton disabled longb" : "dbutton longb"} onClick={() => {buy("sim",cost);}}>Upgrade Simplicity<br></br>with ${cost} ({utime}s)</button>}
     {this.cracklvl===3 ? <></> : <button className={vcash.current<cost ? "dbutton disabled longb" : "dbutton longb"} onClick={() => {buy("ext",cost);}}>Upgrade Extensions<br></br>with ${cost} ({utime}s)</button>}
     </>);
     }
@@ -950,7 +951,7 @@ function App() {
       this.service=d.service || 1;
       this.stock=d.stock || 1;
       this.locked=d.locked || [true,true,true,true,true,false,true,true,true,true,true,true,false,false,false,true];
-      this.keycount=d.keycount!==undefined ? d.keycount : 2; //2
+      this.keycount=d.keycount!==undefined ? d.keycount : 1; //2
       this.loadtime=d.loadtime || 3;
       this.dtime=d.dtime || 10;
       this.orderingtime=d.orderingtime || -1;
@@ -1135,7 +1136,8 @@ function App() {
     completeupgrade(c) {
       this.level+=1;
       if (c==="ser") {this.service+=1; this.loadtime=[3,2,1][this.service-1]; this.dtime=[10,6,2][this.service-1]; this.refreshprices();}
-      else if (c==="stock") {this.stock+=1; this.keycount+=3;}
+      else if (c==="stock" && this.stock===1) {this.stock+=1; this.keycount+=2;}
+      else if (c==="stock" && this.stock===2) {this.stock+=1; this.keycount+=3;}
     }
 
     getstyle() {
@@ -1272,9 +1274,9 @@ function App() {
         sell(this.reward[0],this.loc);
         sfixretcount(vfixretcount.current+1);
         if (vgamemode.current>=3 && vgamemode.current<=5 && gameended===false) {
-          if (vgamemode.current===3 && vfixretcount.current>=15) {endgame();}
-          if (vgamemode.current===4 && vfixretcount.current>=30) {endgame();}
-          if (vgamemode.current===5 && vfixretcount.current>=60) {endgame();}
+          if (vgamemode.current===3 && vfixretcount.current>=10) {endgame();}
+          if (vgamemode.current===4 && vfixretcount.current>=20) {endgame();}
+          if (vgamemode.current===5 && vfixretcount.current>=40) {endgame();}
         }
       }
     }
@@ -1766,7 +1768,7 @@ function App() {
   function gencell(loc,s="e",d={},reload=false) {
     if (s==="e") {return (new Cell({"loc":loc}));}
     const dbuildcost1=[rdint(200,299),rdint(200,299),rdint(200,299),rdint(200,299),rdint(50,149)];
-    const dbuildcost2=[rdint(200,299),rdint(200,299),rdint(200,299),rdint(200,299),rdint(400,599),rdint(900,1099),rdint(1400,1599),rdint(1900,2099)];
+    const dbuildcost2=[rdint(400,599),rdint(400,599),rdint(400,599),rdint(400,599),rdint(400,599),rdint(900,1099),rdint(1400,1599),rdint(1900,2099)];
     const dsellprice=d.sellprice !==null ? d.sellprice : rdint(400,599);
     const sel= d.sel || false;
     const def= d.def || false;
@@ -1774,7 +1776,7 @@ function App() {
     if (s[0]==="k") {return (reload ? new Driver(d) : new Driver({"sel":sel, "loc":loc, "def":def, "type":s, "buildcost":dbuildcost1, "sellprice":dsellprice}));}
     if (s==="tp") {return (reload ? new Touchpad(d) : new Touchpad({"sel":sel, "loc":loc, "def":def, "type":s, "buildcost":dbuildcost1, "sellprice":dsellprice}));}
     if (s==="dev") {return (reload ? new Device(d) : new Device({"sel":sel, "loc":loc, "type":s, "udlr":[true, true, true, true], "buildcost":dbuildcost1, "sellprice":dsellprice,
-    "codes":rdcodeblock(vdiff.current), "reward":[rdint(800,999),rdint(1000,1199),rdint(1400,1599),rdint(2000,2199)], "returntime":vtime.current+getreturntime()}));}
+    "codes":rdcodeblock(vdiff.current), "reward":[rdint(800,999),rdint(800,999),rdint(1300,1499),rdint(1800,1999)], "returntime":vtime.current+getreturntime()}));}
     if (s==="sw") {return (reload ? new Shopware(d) : new Shopware({"sel":sel, "def":def, "loc":loc, "type":s, "buildcost":dbuildcost2}));}
     if (s==="bf") {return (reload ? new Bruteforcer(d) : new Bruteforcer({"sel":sel, "loc":loc, "type":s, "buildcost":dbuildcost2}))}
     if (s==="dg") {return (reload ? new DevGuard(d) : new DevGuard({"sel":sel, "loc":loc, "type":s, "buildcost":dbuildcost2}))}
@@ -2105,7 +2107,7 @@ function App() {
       }
       return x;
     }
-    var t=120-vdiff.current*2+rdint(1,20)
+    var t=100-vdiff.current+rdint(1,20)
     const n= incomdevcount(vstate.current)+Math.min((vnxtspawn.current-vtime.current<=15 ? 1 : 0) + vsellspawn.current.filter((i) => i-vtime.current<=15).length, countspace())
     for (let i = 0; i < Math.max(n,2); i++) {
       t+=rdint(90,149)-Math.floor(vdiff.current/2);
@@ -2525,7 +2527,7 @@ function App() {
   }
 
   function disgamemode() {
-    return(["Best in 15 minutes","Best in 30 minutes","Best in 60 minutes","Fastest to 30 fixes","Fastest to 60 fixes","Fastest to 100 fixes",
+    return(["Best in 15 minutes","Best in 30 minutes","Best in 60 minutes","Fastest to 10 fixes","Fastest to 20 fixes","Fastest to 40 fixes",
       ["3☆ St☆r-keep☆r","3★ St☆r-keep☆r","3★ St★r-keep☆r","3★ St★r-keep★r"][vstarcount.current],
       ["5☆ St☆r-k☆☆p☆r","5★ St☆r-k☆☆p☆r","5★ St★r-k☆☆p☆r","5★ St★r-k★☆p☆r","5★ St★r-k★★p☆r","5★ St★r-k★★p★r"][vstarcount.current],
       ["3☆ Regen St☆r-keep☆r","3★ Regen St☆r-keep☆r","3★ Regen St★r-keep☆r","3★ Regen St★r-keep★r"][vstarcount.current],
@@ -2586,9 +2588,9 @@ function App() {
       <button className="startbutton2" style={getstyle("15%","min(4vw,8vh)",0,0)} onClick={() => {sstartsetx(0,0);}}>15 mins</button>
       <button className="startbutton2" style={getstyle("15%","min(4vw,8vh)",0,1)} onClick={() => {sstartsetx(0,1);}}>30 mins</button>
       <button className="startbutton2" style={getstyle("15%","min(4vw,8vh)",0,2)} onClick={() => {sstartsetx(0,2);}}>60 mins</button>
-      <button className="startbutton2" style={getstyle("15%","min(4vw,8vh)",0,3)} onClick={() => {sstartsetx(0,3);}}>15 fixes</button>
-      <button className="startbutton2" style={getstyle("15%","min(4vw,8vh)",0,4)} onClick={() => {sstartsetx(0,4);}}>30 fixes</button>
-      <button className="startbutton2" style={getstyle("15%","min(4vw,8vh)",0,5)} onClick={() => {sstartsetx(0,5);}}>60 fixes</button>
+      <button className="startbutton2" style={getstyle("15%","min(4vw,8vh)",0,3)} onClick={() => {sstartsetx(0,3);}}>10 fixes</button>
+      <button className="startbutton2" style={getstyle("15%","min(4vw,8vh)",0,4)} onClick={() => {sstartsetx(0,4);}}>20 fixes</button>
+      <button className="startbutton2" style={getstyle("15%","min(4vw,8vh)",0,5)} onClick={() => {sstartsetx(0,5);}}>40 fixes</button>
       <button className="startbutton2" style={getstyle("15%","min(4vw,8vh)",0,6)} onClick={() => {sstartsetx(0,6);}}>3 Stars</button>
       <button className="startbutton2" style={getstyle("15%","min(4vw,8vh)",0,7)} onClick={() => {sstartsetx(0,7);}}>5 Stars</button>
       <button className="startbutton2 disabled" style={getstyle("15%","min(4vw,8vh)",0,8)} onClick={() => {sstartsetx(0,8);}}>3 StarsR</button>
