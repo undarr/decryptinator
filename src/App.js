@@ -1768,7 +1768,7 @@ function App() {
   function gencell(loc,s="e",d={},reload=false) {
     if (s==="e") {return (new Cell({"loc":loc}));}
     const dbuildcost1=[rdint(200,299),rdint(200,299),rdint(200,299),rdint(200,299),rdint(50,149)];
-    const dbuildcost2=[rdint(400,599),rdint(400,599),rdint(400,599),rdint(400,599),rdint(400,599),rdint(900,1099),rdint(1400,1599),rdint(1900,2099)];
+    const dbuildcost2=[rdint(400,599),rdint(400,599),rdint(400,599),rdint(400,599),rdint(900,1099),rdint(1400,1599),rdint(1900,2099),rdint(2400,2599)];
     const dsellprice=d.sellprice !==null ? d.sellprice : rdint(400,599);
     const sel= d.sel || false;
     const def= d.def || false;
@@ -1776,7 +1776,7 @@ function App() {
     if (s[0]==="k") {return (reload ? new Driver(d) : new Driver({"sel":sel, "loc":loc, "def":def, "type":s, "buildcost":dbuildcost1, "sellprice":dsellprice}));}
     if (s==="tp") {return (reload ? new Touchpad(d) : new Touchpad({"sel":sel, "loc":loc, "def":def, "type":s, "buildcost":dbuildcost1, "sellprice":dsellprice}));}
     if (s==="dev") {return (reload ? new Device(d) : new Device({"sel":sel, "loc":loc, "type":s, "udlr":[true, true, true, true], "buildcost":dbuildcost1, "sellprice":dsellprice,
-    "codes":rdcodeblock(vdiff.current), "reward":[rdint(800,999),rdint(800,999),rdint(1300,1499),rdint(1800,1999)], "returntime":vtime.current+getreturntime()}));}
+    "codes":rdcodeblock(vdiff.current), "reward":[rdint(800,999),rdint(1000,1199),rdint(1400,1599),rdint(2000,2199)], "returntime":vtime.current+getreturntime()}));}
     if (s==="sw") {return (reload ? new Shopware(d) : new Shopware({"sel":sel, "def":def, "loc":loc, "type":s, "buildcost":dbuildcost2}));}
     if (s==="bf") {return (reload ? new Bruteforcer(d) : new Bruteforcer({"sel":sel, "loc":loc, "type":s, "buildcost":dbuildcost2}))}
     if (s==="dg") {return (reload ? new DevGuard(d) : new DevGuard({"sel":sel, "loc":loc, "type":s, "buildcost":dbuildcost2}))}
@@ -2338,7 +2338,7 @@ function App() {
   };
 
   useEffect(() => {
-    document.title = 'Decryptinator (v0.2) - Strategic typing game, Undarfly Universe';
+    document.title = 'Decryptinator (v1.0) - Strategic typing game, Undarfly Universe';
     window.addEventListener('keydown', handlekeypress);
     window.addEventListener("focus", onFocus);
     window.addEventListener("blur", onBlur);
@@ -2636,7 +2636,7 @@ function App() {
     <link rel="stylesheet"href="https://fonts.googleapis.com/css2?family=Comic+Neue"></link>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide"></link>
     <div className="header">
-      <h1 className="header-left">Decryptinator (v0.2)</h1>
+      <h1 className="header-left">Decryptinator (v1.0)</h1>
       <div className="header-right">
         <h1>an Original Game</h1>
       </div>
